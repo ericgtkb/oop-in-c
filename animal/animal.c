@@ -3,36 +3,33 @@
 #include <string.h>
 #include "animal.h"
 
-static void generic_walk() {
-    printf("Just a normal animal walking...\n");
+static void generic_walk(Animal *this) {
+    printf("%s is walking... just a normal animal walking...\n", this->attributes->name);
 }
 
-static void generic_make_sound() {
-    printf("Just a normal animal making some generic sound...\n");
+static void generic_make_sound(Animal *this) {
+    printf("%s is making sound... Just a normal animal making some generic sound...\n", this->attributes->name);
 }
+
+// Define the methods here, so that we don't have to allocate space for methods for all animals
+// Note however, attributes are for each individual animal
+static Methods animal_methods = {generic_walk, generic_make_sound};
 
 Animal *new_animal(const char *name) {
     Animal *animal = malloc(sizeof(Animal));
-    animal->attributes = malloc(sizeof(Attributes));
-    animal->methods = malloc(sizeof(Methods));
-    strcpy(animal->attributes->name, name);
-    animal->methods->walk = generic_walk;
-    animal->methods->make_sound = generic_make_sound;
+    initialize_animal(animal, name);
 
     return animal;
 }
 
 void initialize_animal(Animal *animal, const char *name) {
     animal->attributes = malloc(sizeof(Attributes));
-    animal->methods = malloc(sizeof(Methods));
+    animal->methods = &animal_methods;
     strcpy(animal->attributes->name, name);
-    animal->methods->walk = generic_walk;
-    animal->methods->make_sound = generic_make_sound;
 }
 
 void del_animal(Animal *animal) {
     free(animal->attributes);
-    free(animal->methods);
 }
 
 

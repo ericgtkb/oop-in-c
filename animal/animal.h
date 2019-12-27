@@ -14,8 +14,8 @@ struct _Attributes {
     char name[50];
 };
 
-typedef void _walk(void);
-typedef void _make_sound(void);
+typedef void _walk(Animal *this);
+typedef void _make_sound(Animal *this);
 
 struct _Methods {
     _walk *walk;
@@ -23,7 +23,7 @@ struct _Methods {
 };
 
 Animal *new_animal(const char *name);
-void initialize_animal(Animal * animal, const char *name);
+void initialize_animal(Animal *animal, const char *name);
 void del_animal(Animal *animal);
 
 #endif //ANIMAL_ANIMAL_H
